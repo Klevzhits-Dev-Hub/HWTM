@@ -8,10 +8,23 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var questionModel = QuestionModel()
+    
     var body: some View {
         ZStack {
             GradientBackground()
             VStack {
+                Group {
+                    if let error = questionModel.errorMessage {
+                        Text(error)
+                            .foregroundColor(.red)
+                    } else if let question = questionModel.questions.first {
+                        Text(question.question)
+                            .font(.headline)
+                    } else {
+                        ProgressView("Загрузка вопроса...")
+                    }
+                }
                 Spacer()
                 
                 AnswerButton(label: "A:", answer: "Answer 1", state: .neutral) {
@@ -28,6 +41,9 @@ struct ContentView: View {
                 }
             }
             .padding()
+        }
+        .onAppear {
+            questionModel.loadQuestions(.hard)
         }
     }
 }
