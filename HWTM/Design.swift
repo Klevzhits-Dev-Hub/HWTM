@@ -21,7 +21,6 @@ struct GradientBackground: View {
                 .ignoresSafeArea()
                 .blur(radius: 87)
         }
-        
     }
 }
 

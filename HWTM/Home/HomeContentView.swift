@@ -13,19 +13,15 @@ struct HomeContentView: View {
     var body: some View {
 
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.8), Color.black]),
-                           startPoint: .topLeading,
-                           endPoint: .bottomTrailing
-            )
-            .ignoresSafeArea()
+            GradientBackground()
 
-            // обернуть в группы стеков
             GeometryReader { geometry in
                 VStack(spacing: 0) {
                     HStack {
                         Spacer()
                         Button(action: {
-                            vm.onSupportButtonTapped()
+//                            vm.onSupportButtonTapped()
+                            vm.showModal = true
                         }) {
                             Image(systemName: "questionmark.circle.fill")
                                 .resizable()
@@ -35,6 +31,8 @@ struct HomeContentView: View {
                         }
                     }
                     .frame(height: geometry.size.height * 0.1)
+                    .fullScreenCover(isPresented: $vm.showModal) { SupportContentView()
+                    }
 
                     VStack {
                         Spacer()

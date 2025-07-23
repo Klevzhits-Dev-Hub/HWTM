@@ -16,6 +16,7 @@ final class HomeVM: ObservableObject {
     }
 
     @Published var gameState: GameStates = .notStarted
+    @Published var showModal: Bool = false
     var count = 0
 
     func onStartButtonTapped() {
