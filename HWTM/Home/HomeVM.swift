@@ -33,8 +33,9 @@ final class HomeVM: ObservableObject {
 
     func onSupportButtonTapped() {
         let states: [GameStates] = [.inProgress, .gameOver, .notStarted, .started]
-        guard count < states.count - 1 else { count = 0; return}
+        guard count < states.count - 1 else { count = -1; return}
         count += 1
+        print(count)
         gameState = states[count]
     }
 }
