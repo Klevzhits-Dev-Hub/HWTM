@@ -10,14 +10,28 @@ import SwiftUI
 final class HomeVM: ObservableObject {
     enum GameStates {
         case notStarted
-        case inProgress
+        case inProgress // to remove later
         case gameOver(score: Int)
     }
 
     @Published var gameState: GameStates = .notStarted
     @Published var hasPlayed: Bool = false /// to show label with the best score
     @Published var showModal: Bool = false
+    @Published var isGameStarted: Bool = false /// to show button "continue"
+
     var count = 0
+
+    /*
+     isGameStarted will be used to show the "continue" button
+
+     case gameOver -- will be a separated screen later:
+     2. level - Int
+     3. score - Int
+     */
+
+    init(initialState: GameStates) {
+        self.gameState = initialState
+    }
 
     func onStartButtonTapped() {
         switch gameState {

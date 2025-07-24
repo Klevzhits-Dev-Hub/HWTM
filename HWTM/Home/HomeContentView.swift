@@ -125,6 +125,6 @@ struct HomeContentView: View {
     }
 }
 
-//#Preview {
-//    HomeContentView(vm: HomeVM())
-//}
+#Preview {
+    HomeContentView(vm: HomeVM(initialState: .notStarted))
+}
