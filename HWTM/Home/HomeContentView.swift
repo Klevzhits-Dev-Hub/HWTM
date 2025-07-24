@@ -59,52 +59,72 @@ struct HomeContentView: View {
 
     private func labelsView(geometry: GeometryProxy) -> some View {
         VStack(spacing: 8) {
-            Text("Who Wants\nto be a Millioner")
-                .font(.title)
-                .fontWeight(.bold)
-                .multilineTextAlignment(.center)
-                .foregroundColor(.white)
+            switch vm.gameState {
+            case .notStarted, .inProgress:
+                Text("Who Wants\nto be a Millioner")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(.white)
 
-            if vm.hasPlayed == true {
-                Text("All-time Best Score")
-                    .foregroundColor(.gray)
+                if vm.hasPlayed == true {
+                    Text("All-time Best Score")
+                        .foregroundColor(.gray)
+                }
+
+            case .gameOver(let score):
+                Text("Game over!")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(.white)
+
+                HStack(alignment: .center, spacing: .zero) {
+                    Text("$\(score)")
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+
+                    Image("coin")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 45, height: 45)
+                        .clipShape(Circle())
+                }
             }
         }
         .frame(height: geometry.size.height * 0.2)
     }
 
     private func buttonsView(geometry: GeometryProxy) -> some View {
-        VStack(spacing: 16) {
-            if vm.gameState == .inProgress {
+        VStack(spacing: 14) {
+
+            switch vm.gameState {
+            case .notStarted:
+                SystemButton(label: "New game", type: .active) {
+                    // push game screen
+                }
+
+            case .inProgress:
                 SystemButton(label: "Continue", type: .active) {
-                    // action
+                    // push saved game screen
+                }
+                SystemButton(label: "New game", type: .neutral) {
+                    // push a new game screen
+                }
+
+            case .gameOver(_):
+                SystemButton(label: "New game", type: .active) {
+                    // push game screen
+                }
+                SystemButton(label: "Main screen", type: .neutral) {
+                    // push game screen
                 }
             }
-
-            // переделать в SystemButton
-            Button(action: {
-                vm.onStartButtonTapped()
-            }) {
-                Text("New Game")
-                    .fontWeight(.bold)
-                    .frame(maxWidth: .infinity, minHeight: 56)
-                    .background(
-                        LinearGradient(
-                            gradient: Gradient(colors: [Color.yellow, Color.orange]),
-                            startPoint: .top,
-                            endPoint: .bottom
-                        )
-                    )
-                    .foregroundColor(.white)
-                    .clipShape(Capsule())
-                    .padding(.horizontal, 40)
-                    .shadow(radius: 5)
-            }
         }
-        .frame(height: geometry.size.height * 0.2)
     }
 }
 
-#Preview {
-    HomeContentView(vm: HomeVM())
-}
+//#Preview {
+//    HomeContentView(vm: HomeVM())
+//}

@@ -87,7 +87,7 @@ struct SystemButton: View {
     private var backgroundColor: Color {
         switch type {
         case .neutral:
-            return .blue
+            return .clear
         case .active:
             return .yellow
         }

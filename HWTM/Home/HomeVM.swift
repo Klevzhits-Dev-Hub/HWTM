@@ -11,7 +11,7 @@ final class HomeVM: ObservableObject {
     enum GameStates {
         case notStarted
         case inProgress
-        case gameOver
+        case gameOver(score: Int)
     }
 
     @Published var gameState: GameStates = .notStarted
@@ -31,7 +31,7 @@ final class HomeVM: ObservableObject {
     }
 
     func onSupportButtonTapped() {
-        let states: [GameStates] = [.inProgress, .gameOver, .notStarted]
+        let states: [GameStates] = [.inProgress, .gameOver(score: 15000), .notStarted]
         guard count < states.count - 1 else { count = -1; return}
         count += 1
         print(count)
