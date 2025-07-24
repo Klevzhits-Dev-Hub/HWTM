@@ -78,13 +78,12 @@ struct GameOverContentView: View {
         VStack(spacing: 14) {
 
             SystemButton(label: "\(vm.gameState.continueButtonTitle)", type: .active) {
-                // push saved game screen
+                // action: push saved game screen
             }
             SystemButton(label: "Maybe next time", type: .neutral) {
-                // push a new game screen
+                // action: push a new game screen
             }
         }
-//        .padding(.top, 32)
     }
 }
 
