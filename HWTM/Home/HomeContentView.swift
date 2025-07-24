@@ -71,26 +71,6 @@ struct HomeContentView: View {
                     Text("All-time Best Score")
                         .foregroundColor(.gray)
                 }
-
-            case .gameOver(let score):
-                Text("Game over!")
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(.white)
-
-                HStack(alignment: .center, spacing: .zero) {
-                    Text("$\(score)")
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-
-                    Image("coin")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 45, height: 45)
-                        .clipShape(Circle())
-                }
             }
         }
         .frame(height: geometry.size.height * 0.2)
@@ -111,14 +91,6 @@ struct HomeContentView: View {
                 }
                 SystemButton(label: "New game", type: .neutral) {
                     // push a new game screen
-                }
-
-            case .gameOver(_):
-                SystemButton(label: "New game", type: .active) {
-                    // push game screen
-                }
-                SystemButton(label: "Main screen", type: .neutral) {
-                    // push game screen
                 }
             }
         }
