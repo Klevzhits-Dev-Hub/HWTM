@@ -10,12 +10,12 @@ import SwiftUI
 final class HomeVM: ObservableObject {
     enum GameStates {
         case notStarted
-        case started
         case inProgress
         case gameOver
     }
 
     @Published var gameState: GameStates = .notStarted
+    @Published var hasPlayed: Bool = false /// to show label with the best score
     @Published var showModal: Bool = false
     var count = 0
 
@@ -23,8 +23,6 @@ final class HomeVM: ObservableObject {
         switch gameState {
         case .notStarted:
             print("show very first screen")
-        case .started:
-            print("show best score")
         case .inProgress:
             print("show continue button")
         case .gameOver: // add level and prize
@@ -33,7 +31,7 @@ final class HomeVM: ObservableObject {
     }
 
     func onSupportButtonTapped() {
-        let states: [GameStates] = [.inProgress, .gameOver, .notStarted, .started]
+        let states: [GameStates] = [.inProgress, .gameOver, .notStarted]
         guard count < states.count - 1 else { count = -1; return}
         count += 1
         print(count)

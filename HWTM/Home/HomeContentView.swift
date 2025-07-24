@@ -65,7 +65,7 @@ struct HomeContentView: View {
                 .multilineTextAlignment(.center)
                 .foregroundColor(.white)
 
-            if vm.gameState == .started {
+            if vm.hasPlayed == true {
                 Text("All-time Best Score")
                     .foregroundColor(.gray)
             }
