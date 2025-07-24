@@ -11,7 +11,16 @@ import SwiftUI
 struct HWTMApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            LevelListView(
+                viewModel: LevelListViewModel(
+                    levels: [
+                        Level(number: 4, amount: "$3,000", type: .final),
+                        Level(number: 3, amount: "$2,000", type: .regular),
+                        Level(number: 2, amount: "$1,000", type: .guaranteed),
+                        Level(number: 1, amount: "$500", type: .final)
+                    ]
+                )
+            )
         }
     }
 }

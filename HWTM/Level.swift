@@ -17,6 +17,5 @@ struct Level: Identifiable {
 enum LevelType {
     case regular
     case guaranteed
-    case current
     case final
 }
