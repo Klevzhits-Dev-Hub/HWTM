@@ -28,6 +28,7 @@ struct ContentView: View {
                 }
                 Spacer()
                 TimerView(timerController: timerController)
+                    .frame(width: 200, height: 200)
                 AnswerButton(label: "A:", answer: "Answer 1", state: .neutral) {
                     timerController.start()
                 }
