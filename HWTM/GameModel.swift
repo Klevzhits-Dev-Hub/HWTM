@@ -10,9 +10,11 @@ struct Game {
     var earnedPrize: Int
     // minimum payout?
 
+    // timeLeft - before exit
+
     var isCallAvailable: Bool = true
     var isAskAudienceAvailable: Bool = true
-    var isAskFriendAvailable: Bool = true
+    var isFiftyFiftyAvailable: Bool = true
     // var isMistakeRightAvailable: Bool
 
     var isOver: Bool = false
