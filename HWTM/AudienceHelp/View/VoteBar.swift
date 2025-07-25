@@ -39,5 +39,5 @@ struct VoteBar: View {
 
 
 #Preview {
-//    VoteBar(percent: 10, color: .red, letter: "A", isAnimated: true, animationDelay: 0.1)
+    VoteBar(percent: 50, color: .blue, letter: "A", isAnimated: true, animationDelay: 1)
 }
