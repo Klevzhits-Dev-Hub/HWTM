@@ -12,9 +12,11 @@ class Game {
    var earnedPrize: Int = 0
     // minimum payout?
 
+    // timeLeft - before exit
+
     var isCallAvailable: Bool = true
     var isAskAudienceAvailable: Bool = true
-    var isAskFriendAvailable: Bool = true
+    var isFiftyFiftyAvailable: Bool = true
     // var isMistakeRightAvailable: Bool
 
     var isOver: Bool = false
