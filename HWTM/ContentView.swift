@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
     @StateObject private var questionModel = QuestionModel()
     let timerController = TimerController()
+    let answersMusic = AnswersMusic()
     
     var body: some View {
         ZStack {
@@ -33,13 +34,16 @@ struct ContentView: View {
                     timerController.start()
                 }
                 AnswerButton(label: "A:", answer: "Answer 1", state: .correct) {
-                    timerController.pause()
+//                    timerController.pause()
+                    answersMusic.correctAnswerPlay()
                 }
                 AnswerButton(label: "A:", answer: "Answer 1", state: .incorrect) {
-                    timerController.repause()
+//                    timerController.repause()
+                    answersMusic.wrongAnswerPlay()
                 }
                 AnswerButton(label: "", answer: "Answer 1", state: .chois) {
                     timerController.reset()
+//                    answersMusic.stopMusic()
                 }
             }
             .padding()
