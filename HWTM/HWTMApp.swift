@@ -11,7 +11,8 @@ import SwiftUI
 struct HWTMApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+          let viewModel = GameViewModel()
+          GameContentView(viewModel: viewModel)
         }
     }
 }

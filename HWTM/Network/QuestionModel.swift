@@ -22,20 +22,9 @@ struct Question: Codable {
         }
 }
 
-@MainActor
-class QuestionModel: ObservableObject {
-    @Published var questions: [Question] = []
-    @Published var errorMessage: String?
-
-    func loadQuestions(_ level: QuestionLevel) {
-        Task {
-            do {
-                questions = try await APIService.shared.fetchQuestions(level)
-            } catch {
-                print("Ошибка загрузки вопросов: \(error)")
-                errorMessage = "Не удалось загрузить вопросы: \(error.localizedDescription)"
-            }
-        }
-    }
+class QuestionModel {
+  func loadQuestions(_ level: QuestionLevel) async throws -> [Question] {
+    return try await APIService.shared.fetchQuestions(level)
+  }
 }
 
