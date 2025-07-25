@@ -9,6 +9,14 @@ import SwiftUI
 
 struct GameContentView: View {
   @ObservedObject var viewModel: GameViewModel
+  //@ObservedObject var timerController = TimerController()
+  
+  @State private var isAnswerRight = false
+  @State private var isGoingToLevelScreen = false
+  @State private var questionLoad = false
+  @State private var showAnswerState = false
+  
+  @State private var selectedAnswer: String?
   
   var body: some View {
     container {
@@ -31,7 +39,21 @@ struct GameContentView: View {
       content()
     }
     .task {
-      await viewModel.loadQuestions()
+      guard viewModel.questions != nil else {
+        await viewModel.loadQuestions()
+        return
+      }
+    //  timerController.start()
+    }
+    .navigationDestination(isPresented: $isGoingToLevelScreen) {
+      LevelListView(viewModel: LevelListViewModel(
+        currentLevel: viewModel.currentLevel,
+        isAnswerRight: isAnswerRight)
+      )
+    }
+    .onDisappear() {
+      self.viewModel.changeLevel()
+    //  timerController.repause()
     }
   }
   
@@ -42,17 +64,42 @@ struct GameContentView: View {
   
   private func questionFlow(question: Question) -> some View {
     VStack {
+//      Image(timerController.currntImageName)
+//          .resizable()
+//          .aspectRatio(contentMode: .fit)
       Text(question.question)
         .font(.headline)
       VStack {
         ForEach(question.allAnswersShuffled, id: \.self) { answer in
-          AnswerButton(label: answer, answer: answer, state: .neutral) {
-            self.viewModel.currentQuestion?.correct_answer == answer ?
-            print("Правильно!") :
-            print("Неправильно!")
+          AnswerButton(label: "A:", answer: answer, state: getAnswerState(answer: answer)) {
+            selectedAnswer = answer
+            showAnswerState = true
+            
+            if self.viewModel.currentQuestion?.correct_answer == answer {
+              self.isAnswerRight = true
+            } else {
+              self.isAnswerRight = false
+            }
+            
+            Task {
+             try? await Task.sleep(for: .seconds(1))
+              isGoingToLevelScreen = true
+            }
           }
         }
       }
+    }
+  }
+  
+  private func getAnswerState(answer: String) -> AnswerState {
+    if let selectedAnswer, showAnswerState {
+      if selectedAnswer == answer {
+        self.viewModel.currentQuestion?.correct_answer == answer ? .correct : .incorrect
+      } else {
+        .neutral
+      }
+    } else {
+      .neutral
     }
   }
   

@@ -11,8 +11,9 @@ import SwiftUI
 struct HWTMApp: App {
     var body: some Scene {
         WindowGroup {
-          let viewModel = GameViewModel()
-          GameContentView(viewModel: viewModel)
+          NavigationStack {
+            HomeContentView(vm: HomeVM(initialState: .notStarted))
+          }
         }
     }
 }

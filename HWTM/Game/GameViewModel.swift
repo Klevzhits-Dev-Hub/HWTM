@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+enum TypeOfScreen {
+  case saved
+  case newGame
+}
+
 @MainActor
 final class GameViewModel: ObservableObject {
 
@@ -14,6 +19,11 @@ final class GameViewModel: ObservableObject {
   @Published var questions: [Question]?
   @Published var errorMessage: String?
   @Published var currentLevel = 0
+  @Published var typeOfScreen: TypeOfScreen
+  
+  init(typeOfScreen: TypeOfScreen) {
+    self.typeOfScreen = typeOfScreen
+  }
   
   var currentQuestion: Question? {
     questions?[currentLevel]
@@ -29,5 +39,18 @@ final class GameViewModel: ObservableObject {
   
   func changeLevel() {
     currentLevel += 1
+  }
+  
+  func resetLevel() {
+    currentLevel = 0
+  }
+  
+  func resetQuestions() {
+    questions = nil
+  }
+  
+  func resetModule() {
+    resetLevel()
+    resetQuestions()
   }
 }

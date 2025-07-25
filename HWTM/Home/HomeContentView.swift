@@ -9,9 +9,10 @@ import SwiftUI
 
 struct HomeContentView: View {
     @ObservedObject var vm: HomeVM
+    @StateObject var gameViewModel: GameViewModel = GameViewModel(typeOfScreen: .newGame)
+    @State private var isGoingToGameScreen = false
 
     var body: some View {
-        NavigationStack {
             GeometryReader { geometry in
                 ZStack {
                     GradientBackground()
@@ -28,7 +29,7 @@ struct HomeContentView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
                         vm.onSupportButtonTapped()
-//                        vm.showModal = true
+                        vm.showModal = true
                     }) {
                         Image(systemName: "questionmark.circle.fill")
                             .resizable()
@@ -39,7 +40,6 @@ struct HomeContentView: View {
                     .fullScreenCover(isPresented: $vm.showModal) { SupportContentView()
                     }
                 }
-            }
         }
     }
 
@@ -81,20 +81,22 @@ struct HomeContentView: View {
 
             switch vm.gameState {
             case .notStarted:
-                SystemButton(label: "New game", type: .active) {
-                    // push game screen
-                }
-
+              navigationButtonToGame(lable: "New game", type: .active)
             case .inProgress:
-                SystemButton(label: "Continue", type: .active) {
-                    // push saved game screen
-                }
-                SystemButton(label: "New game", type: .neutral) {
-                    // push a new game screen
-                }
+              navigationButtonToGame(lable: "Continue", type: .active)
+              navigationButtonToGame(lable: "New game", type: .neutral)
             }
         }
     }
+  
+  private func navigationButtonToGame(lable: String, type: SystemButtonStyle) -> some View {
+    SystemButton(label: lable, type: type) {
+      isGoingToGameScreen = true
+    }
+    .navigationDestination(isPresented: $isGoingToGameScreen) {
+      GameContentView(viewModel: gameViewModel)
+    }
+  }
 }
 
 #Preview {

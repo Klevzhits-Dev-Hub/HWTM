@@ -18,8 +18,8 @@ struct Question: Codable {
     let incorrect_answers: [String]
     
     var allAnswersShuffled: [String] {
-            (incorrect_answers + [correct_answer]).shuffled()
-        }
+          (incorrect_answers + [correct_answer]).shuffled()
+    }
 }
 
 class QuestionModel {
