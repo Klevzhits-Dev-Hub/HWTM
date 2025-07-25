@@ -11,65 +11,62 @@ struct LevelView: View {
     
     let level: Level
     let isCurrent: Bool
-        
-        var body: some View {
-            HStack {
-                Text("\(level.number):")
-                    .bold()
+    
+    var body: some View {
+        GeometryReader { geometry in
+            ZStack {
+                CustomButtonShape()
+                    .fill(
+                        LinearGradient(
+                            gradient: Gradient(colors: LevelType.gradientColors(for: level.type, isCurrent: isCurrent)),
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                    )
+                    .frame(width: geometry.size.width * 0.9, height: 40)
                 
-                Spacer()
+                CustomButtonShape()
+                    .stroke(Color.white, lineWidth: 2)
+                    .frame(width: geometry.size.width * 0.9, height: 40)
                 
-                Text("\(level.amount)")
-                    .bold()
+                HStack {
+                    Text("\(level.number):")
+                        .bold()
+                    
+                    Spacer()
+                    
+                    Text("\(level.amount)")
+                        .bold()
+                }
+                .padding(.horizontal, 16)
+                .foregroundColor(.white)
+                .frame(width: geometry.size.width * 0.9, height: 40)
             }
-
-            .padding(10)
-            .levelGradient(isCurrent: isCurrent, type: level.type)
-            .clipShape(.capsule)
-            .foregroundColor(.white)
-            .overlay {
-                Capsule()
-                    .stroke(Color.white, lineWidth: 1)
-            }
-            .padding(.horizontal)
-            
+            .frame(width: geometry.size.width, height: 40, alignment: .center)
         }
+        .frame(height: 40)
     }
-
+}
 
 #Preview {
     LevelView(level: Level(number: 3, amount: "$2000", type: .regular), isCurrent: true)
-
 }
+
 
 
 // MARK: - Levels Type Gradient
 
-extension View {
-    func levelGradient(isCurrent: Bool, type: LevelType) -> some View {
-        let colors: [Color]
-
+extension LevelType {
+    static func gradientColors(for type: LevelType, isCurrent: Bool) -> [Color] {
         if isCurrent {
-            colors = [
+            return [
                 Color(red: 59/255, green: 142/255, blue: 20/255),
                 Color(red: 38/255, green: 102/255, blue: 8/255),
                 Color(red: 38/255, green: 102/255, blue: 8/255),
                 Color(red: 61/255, green: 136/255, blue: 26/255)
             ]
-        } else {
-            colors = gradientColors(for: type)
         }
-
-        return self.background(
-            LinearGradient(
-                gradient: Gradient(colors: colors),
-                startPoint: .top,
-                endPoint: .bottom
-            )
-        )
-    }
-
-    private func gradientColors(for type: LevelType) -> [Color] {
+        
         switch type {
         case .regular:
             return [
@@ -89,8 +86,9 @@ extension View {
             return [
                 Color(red: 225/255, green: 207/255, blue: 48/255),
                 Color(red: 225/255, green: 154/255, blue: 48/255),
-                Color(red: 225/255, green: 207/255, blue: 48/255),
+                Color(red: 225/255, green: 207/255, blue: 48/255)
             ]
         }
     }
 }
+
