@@ -5,7 +5,7 @@
 //  Created by Михаил Болгар on 22.07.2025.
 //
 
-final class GameEngine {
+final class GameEngineWrong {
     private(set) var game = Game(
         currentLevel: 1,
         earnedPrize: 0

@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Game {
+struct Game {
    var currentLevel: Int = 0
    var earnedPrize: Int = 0
     // minimum payout?
