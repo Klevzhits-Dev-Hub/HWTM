@@ -9,7 +9,7 @@ import SwiftUI
 
 struct VoteBar: View {
     let percent: Int            
-    let color: Color            
+    let color: LinearGradient
     let letter: String          
     let isAnimated: Bool        
     let animationDelay: Double  
@@ -38,6 +38,6 @@ struct VoteBar: View {
 }
 
 
-#Preview {
-    VoteBar(percent: 50, color: .blue, letter: "A", isAnimated: true, animationDelay: 1)
-}
+//#Preview {
+//    VoteBar(percent: 50, color: .blue, letter: "A", isAnimated: true, animationDelay: 1)
+//}
