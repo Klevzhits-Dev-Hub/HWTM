@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject private var questionModel = QuestionModel()
+    let timerController = TimerController()
     
     var body: some View {
         ZStack {
@@ -26,18 +27,19 @@ struct ContentView: View {
                     }
                 }
                 Spacer()
-                
+                TimerView(timerController: timerController)
+                    .frame(width: 200, height: 200)
                 AnswerButton(label: "A:", answer: "Answer 1", state: .neutral) {
-                    // действие при нажатии
+                    timerController.start()
                 }
                 AnswerButton(label: "A:", answer: "Answer 1", state: .correct) {
-                    // действие при нажатии
+                    timerController.pause()
                 }
                 AnswerButton(label: "A:", answer: "Answer 1", state: .incorrect) {
-                    // действие при нажатии
+                    timerController.repause()
                 }
                 AnswerButton(label: "", answer: "Answer 1", state: .chois) {
-                    // действие при нажатии
+                    timerController.reset()
                 }
             }
             .padding()
