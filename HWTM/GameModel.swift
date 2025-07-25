@@ -5,9 +5,11 @@
 //  Created by Михаил Болгар on 22.07.2025.
 //
 
-struct Game {
-    var currentLevel: Int
-    var earnedPrize: Int
+import Foundation
+
+class Game {
+   var currentLevel: Int = 0
+   var earnedPrize: Int = 0
     // minimum payout?
 
     var isCallAvailable: Bool = true
