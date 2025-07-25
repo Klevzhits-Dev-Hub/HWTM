@@ -21,10 +21,11 @@ struct GradientBackground: View {
                 .ignoresSafeArea()
                 .blur(radius: 87)
         }
-        
     }
 }
 
+// todo: по-хорошему нужна единая базовая модель кнопки, чтобы избежать повторения кода, но не уверен как это делать на суи
+/// play buttons
 enum AnswerState {
     case neutral
     case correct
@@ -73,6 +74,41 @@ struct AnswerButton: View {
             .frame(width: geometry.size.width, height: 56, alignment: .center)
         }
         .frame(height: 56)
+    }
+}
+
+/// system buttons
+enum SystemButtonStyle {
+    case neutral
+    case active
+}
+
+struct SystemButton: View {
+    let label: String
+    let type: SystemButtonStyle
+    let action: () -> Void
+
+    private var backgroundColor: Color {
+        switch type {
+        case .neutral:
+            return .clear
+        case .active:
+            return .yellow
+        }
+    }
+
+    var body: some View {
+        Button(action: action) {
+            Text(label)
+                .fontWeight(.bold)
+                .frame(height: 56)
+                .frame(maxWidth: .infinity)
+                .background(backgroundColor)
+                .foregroundColor(.white)
+                .clipShape(Capsule())
+                .padding(.horizontal, 40)
+                .shadow(radius: 5)
+        }
     }
 }
 
