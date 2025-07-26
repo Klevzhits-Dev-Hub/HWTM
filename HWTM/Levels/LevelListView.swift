@@ -35,7 +35,10 @@ struct LevelListView: View {
                     Spacer()
                     
                     Button(action: {
-                        isGoingToGameOverScreen = true
+                        let prize = viewModel.prizeInfo()
+                            gameOverViewModel.level = prize.level
+                            gameOverViewModel.prize = prize.amount
+                            isGoingToGameOverScreen = true
                     }) {
                         Image(systemName: "banknote")
                             .font(.title2)

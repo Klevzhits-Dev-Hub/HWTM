@@ -53,4 +53,27 @@ class LevelListViewModel: ObservableObject {
             return guaranteedWinLevel?.number
         }
     }
+    
+    func prizeInfo() -> (level: Int, amount: Int) {
+        if isAnswerRight {
+            let level = currentLevel
+            let amount = levelAmount(for: level)
+            return (level, amount)
+        } else if let guaranteed = guaranteedWinLevel {
+            return (guaranteed.number, levelAmount(for: guaranteed.number))
+        } else {
+            return (0, 0)
+        }
+    }
+
+    private func levelAmount(for levelNumber: Int) -> Int {
+        let amountString = levels.first(where: { $0.number == levelNumber })?.amount ?? ""
+        
+        let cleaned = amountString
+            .replacingOccurrences(of: "$", with: "")
+            .replacingOccurrences(of: ",", with: "")
+            .trimmingCharacters(in: .whitespaces)
+
+        return Int(cleaned) ?? 0
+    }
 }
