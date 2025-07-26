@@ -130,14 +130,7 @@ struct HomeContentView: View {
                 }
             }
         }
-    }
-    private func navigationButtonToGame(lable: String, type: SystemButtonStyle, viewModel: GameViewModel, state: AnswerState) -> some View {
-      SystemButton(label: lable, type: type, state: state) {
-      isGoingToGameScreen = true
-    }
-    .navigationDestination(isPresented: $isGoingToGameScreen) {
-      GameContentView(viewModel: viewModel)
-    }
+    
   }
 }
 
