@@ -15,7 +15,7 @@ final class HomeVM: ObservableObject {
     }
 
     @Published var gameState: GameStates = .notStarted
-    @Published var hasPlayed: Bool = false /// to show label with the best score
+    @Published var hasPlayed: Bool = UserDefaultsService().getHasPlayed() /// to show label with the best score
     @Published var showModal: Bool = false
     @Published var isGameStarted: Bool = false /// to show button "continue"
 
@@ -33,13 +33,8 @@ final class HomeVM: ObservableObject {
         self.gameState = initialState
     }
 
-    func onStartButtonTapped() {
-        switch gameState {
-        case .notStarted:
-            print("show very first screen")
-        case .inProgress:
-            print("show continue button")
-        }
+    func getBestScore() -> Int {
+        return UserDefaultsService().getBestScore()
     }
 
     func onSupportButtonTapped() {

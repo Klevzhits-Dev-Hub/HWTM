@@ -56,7 +56,7 @@ final class GameViewModel: ObservableObject {
   }
   
   func resetLevel() {
-    currentLevel = 0
+    currentLevel = 1
   }
   
   func resetQuestions() {

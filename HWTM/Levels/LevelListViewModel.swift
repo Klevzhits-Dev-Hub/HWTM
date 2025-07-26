@@ -11,8 +11,6 @@ class LevelListViewModel: ObservableObject {
   @Published var currentLevel: Int
   @Published var isAnswerRight: Bool
   @Published var levels = [
-      Level(number: 348, amount: "$44", type: .regular),
-      Level(number: 3255, amount: "$04004", type: .regular),
       Level(number: 15, amount: "$1,000,000", type: .final),
       Level(number: 14, amount: "$500,000", type: .regular),
       Level(number: 13, amount: "$250,000", type: .regular),
@@ -37,5 +35,45 @@ class LevelListViewModel: ObservableObject {
         self.currentLevel = currentLevel
         self.isAnswerRight = isAnswerRight
     }
-}
+    
+    var guaranteedWinLevel: Level? {
+        guard !isAnswerRight else { return nil }
+        let passedLevels = levels.filter { $0.number <= currentLevel }
+        return passedLevels.first(where: { $0.type == .guaranteed })
+    }
 
+    var lostBeforeGuaranteed: Bool {
+        !isAnswerRight && guaranteedWinLevel == nil
+    }
+
+    var levelToHighlight: Int? {
+        if isAnswerRight {
+            return currentLevel
+        } else {
+            return guaranteedWinLevel?.number
+        }
+    }
+    
+    func prizeInfo() -> (level: Int, amount: Int) {
+        if isAnswerRight {
+            let level = currentLevel
+            let amount = levelAmount(for: level)
+            return (level, amount)
+        } else if let guaranteed = guaranteedWinLevel {
+            return (guaranteed.number, levelAmount(for: guaranteed.number))
+        } else {
+            return (0, 0)
+        }
+    }
+
+    private func levelAmount(for levelNumber: Int) -> Int {
+        let amountString = levels.first(where: { $0.number == levelNumber })?.amount ?? ""
+        
+        let cleaned = amountString
+            .replacingOccurrences(of: "$", with: "")
+            .replacingOccurrences(of: ",", with: "")
+            .trimmingCharacters(in: .whitespaces)
+
+        return Int(cleaned) ?? 0
+    }
+}
