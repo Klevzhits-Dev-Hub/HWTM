@@ -90,7 +90,7 @@ struct HomeContentView: View {
 
     private func bestScoreView() -> some View {
         HStack(alignment: .center, spacing: .zero) {
-            Text("$\(vm.bestScore)")
+            Text("$\(vm.getBestScore())")
                 .font(.title)
                 .fontWeight(.bold)
                 .foregroundColor(.white)

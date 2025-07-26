@@ -39,5 +39,8 @@ final class GameOverVM: ObservableObject {
         self.gameState = initialState
         self.level = level
         self.prize = prize
+
+        UserDefaultsService().saveHasPlayed()
+        UserDefaultsService().saveBestScore(prize)
     }
 }
