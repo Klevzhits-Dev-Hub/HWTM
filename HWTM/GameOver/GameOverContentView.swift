@@ -10,7 +10,7 @@ import SwiftUI
 struct GameOverContentView: View {
     @ObservedObject var vm: GameOverVM
     @State private var isGoingToGameScreen = false
-    @StateObject var gameViewModel: GameViewModel = GameViewModel(typeOfScreen: .saved)
+    @StateObject var gameViewModel: GameViewModel = GameViewModel(typeOfScreen: .newGame)
 
     var body: some View {
         ZStack {

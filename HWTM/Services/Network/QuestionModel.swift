@@ -12,14 +12,14 @@ struct QuestionResponse: Codable {
     let results: [Question]
 }
 
-struct Question: Codable {
+class Question: Codable {
     let question: String
     let correct_answer: String
     let incorrect_answers: [String]
     
-    var allAnswersShuffled: [String] {
+    lazy var allAnswersShuffled: [String] = {
           (incorrect_answers + [correct_answer]).shuffled()
-    }
+    }()
 }
 
 class QuestionModel {

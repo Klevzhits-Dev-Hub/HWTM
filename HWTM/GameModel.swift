@@ -8,8 +8,8 @@
 import Foundation
 
 struct Game {
-   var currentLevel: Int = 0
-   var earnedPrize: Int = 0
+   var currentLevel: Int
+   var earnedPrize: Int
     // minimum payout?
 
     // timeLeft - before exit
@@ -20,4 +20,6 @@ struct Game {
     // var isMistakeRightAvailable: Bool
 
     var isOver: Bool = false
+  
+  
 }

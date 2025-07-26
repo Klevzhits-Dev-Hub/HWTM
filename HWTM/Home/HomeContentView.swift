@@ -9,7 +9,8 @@ import SwiftUI
 
 struct HomeContentView: View {
     @ObservedObject var vm: HomeVM
-    @StateObject var gameViewModel: GameViewModel = GameViewModel(typeOfScreen: .newGame)
+    @StateObject var gameViewModelNewGame: GameViewModel = GameViewModel(typeOfScreen: .newGame)
+    @StateObject var gameViewModelSaved: GameViewModel = GameViewModel(typeOfScreen: .saved)
     @State private var isGoingToGameScreen = false
 
     var body: some View {
@@ -81,20 +82,20 @@ struct HomeContentView: View {
 
             switch vm.gameState {
             case .notStarted:
-              navigationButtonToGame(lable: "New game", type: .active)
+              navigationButtonToGame(lable: "New game", type: .active, viewModel: gameViewModelNewGame)
             case .inProgress:
-              navigationButtonToGame(lable: "Continue", type: .active)
-              navigationButtonToGame(lable: "New game", type: .neutral)
+              navigationButtonToGame(lable: "Continue", type: .active, viewModel: gameViewModelSaved)
+              navigationButtonToGame(lable: "New game", type: .neutral, viewModel: gameViewModelNewGame)
             }
         }
     }
   
-  private func navigationButtonToGame(lable: String, type: SystemButtonStyle) -> some View {
+  private func navigationButtonToGame(lable: String, type: SystemButtonStyle, viewModel: GameViewModel) -> some View {
     SystemButton(label: lable, type: type) {
       isGoingToGameScreen = true
     }
     .navigationDestination(isPresented: $isGoingToGameScreen) {
-      GameContentView(viewModel: gameViewModel)
+      GameContentView(viewModel: viewModel)
     }
   }
 }
