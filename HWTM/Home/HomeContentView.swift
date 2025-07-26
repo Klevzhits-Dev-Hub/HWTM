@@ -107,15 +107,16 @@ struct HomeContentView: View {
     private func buttonsView(geometry: GeometryProxy) -> some View {
         VStack(spacing: 14) {
 
-//            switch vm.gameState {
-//            case .notStarted:
-//                SystemButton(label: "New Game", type: .active, state: .chois) {
-//                    isGoingToGameScreen = true
-//                    }
-//                .navigationDestination(isPresented: $isGoingToGameScreen) {
-//                    GameContentView(viewModel: GameViewModel(typeOfScreen: .newGame))
-//                }
-//            case .inProgress:
+            switch vm.gameState {
+            case .notStarted:
+                SystemButton(label: "New Game", type: .active, state: .chois) {
+                    isGoingToGameScreenNew = true
+                    vm.gameState = .inProgress
+                    }
+                .navigationDestination(isPresented: $isGoingToGameScreenContinue) {
+                    GameContentView(viewModel: GameViewModel(typeOfScreen: .newGame))
+                }
+            case .inProgress:
                 SystemButton(label: "Continue", type: .active, state: .chois) {
                     isGoingToGameScreenContinue = true
                     }
@@ -128,20 +129,9 @@ struct HomeContentView: View {
                 .navigationDestination(isPresented: $isGoingToGameScreenNew) {
                     GameContentView(viewModel: GameViewModel(typeOfScreen: .newGame))
                 }
-//            }
+            }
         }
     }
-  
-    private func navigationButtonToGame(lable: String, type: SystemButtonStyle, viewModel: GameViewModel, state: AnswerState) -> some View {
-      SystemButton(label: lable, type: type, state: state) {
-          isGoingToGameScreenNew = true
-          vm.gameState = .inProgress
-//          coordinator.goTo(.game)
-    }
-    .navigationDestination(isPresented: $isGoingToGameScreenNew) {
-      GameContentView(viewModel: viewModel)
-    }
-  }
 }
 
 #Preview {
