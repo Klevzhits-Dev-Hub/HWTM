@@ -31,6 +31,7 @@ enum AnswerState {
     case correct
     case incorrect
     case chois
+    case disabled
 }
 
 struct AnswerButton: View {
@@ -46,31 +47,34 @@ struct AnswerButton: View {
             
             Button(action: action) {
 
-                ZStack {
-                    CustomButtonShape()
-                        .fill(
-                            LinearGradient(
-                                gradient: Gradient(colors: gradientColors(for: state)),
-                                startPoint: .top,
-                                endPoint: .bottom
-                            )
-                        )
-                        .frame(width: geometry.size.width * 0.9, height: 56)
-                    
-                    CustomButtonShape()
-                        .stroke(Color.white, lineWidth: 2)
-                        .frame(width: geometry.size.width * 0.9, height: 56)
-                    
-                    HStack(spacing: 4) {
-                        Text("\(label)")
-                            .foregroundColor(.orange)
-                            .bold()
-                        Text(answer)
-                            .foregroundColor(.white)
-                    }
-                    .font(.headline)
+              ZStack {
+                CustomButtonShape()
+                  .fill(
+                    LinearGradient(
+                      gradient: Gradient(colors: gradientColors(for: state)),
+                      startPoint: .top,
+                      endPoint: .bottom
+                    )
+                  )
+                  .frame(width: geometry.size.width * 0.9, height: 56)
+                
+                CustomButtonShape()
+                  .stroke(Color.white, lineWidth: 2)
+                  .frame(width: geometry.size.width * 0.9, height: 56)
+                
+                if state != .disabled {
+                  HStack(spacing: 4) {
+                    Text("\(label)")
+                      .foregroundColor(.orange)
+                      .bold()
+                    Text(answer)
+                      .foregroundColor(.white)
+                  }
+                  .font(.headline)
                 }
+              }
             }
+            .disabled(state == .disabled)
             .frame(width: geometry.size.width, height: 56, alignment: .center)
         }
         .frame(height: 56)
@@ -112,6 +116,31 @@ struct SystemButton: View {
     }
 }
 
+struct HintButton: View {
+    let systemName: String
+    var isPressed: Bool
+    let action: () -> Void
+    
+    var body: some View {
+      Button(action: action) {
+        
+        Image(systemName: systemName)
+          .font(.system(size: 20, weight: .medium))
+          .foregroundColor(.white)
+          .frame(width: 70, height: 50)
+          .background(
+            Capsule()
+              .strokeBorder(Color.white, lineWidth: 2)
+              .background(Capsule().fill(isPressed ? Color.gray : Color.blue))
+              .clipShape(Capsule()))
+          .buttonStyle(PlainButtonStyle())
+      }
+      .disabled(isPressed)
+      .opacity(isPressed ? 0.5 : 1)
+    }
+}
+
+
 #Preview {
     GradientBackground()
 }
@@ -147,6 +176,13 @@ struct SystemButton: View {
                 Color(red: 225/255, green: 154/255, blue: 48/255),
                 Color(red: 225/255, green: 207/255, blue: 48/255)
             ]
+        case .disabled:
+          return [
+              Color(red: 2/255, green: 93/255, blue: 131/255),
+              Color(red: 2/255, green: 43/255, blue: 84/255),
+              Color(red: 2/255, green: 6/255, blue: 49/255),
+              Color(red: 8/255, green: 60/255, blue: 102/255)
+          ]
         }
     }
 
