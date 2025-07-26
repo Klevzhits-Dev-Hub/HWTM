@@ -9,11 +9,12 @@ import SwiftUI
 
 @main
 struct HWTMApp: App {
+    @StateObject private var coordinator = NavigationCoordinator()
+
     var body: some Scene {
         WindowGroup {
-          NavigationStack {
-            HomeContentView(vm: HomeVM(initialState: .notStarted))
-          }
+            ContentView()
+                .environmentObject(coordinator)
         }
     }
 }
