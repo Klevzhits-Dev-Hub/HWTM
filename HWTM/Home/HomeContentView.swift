@@ -11,7 +11,8 @@ struct HomeContentView: View {
     @ObservedObject var vm: HomeVM
     @StateObject var gameViewModelNewGame: GameViewModel = GameViewModel(typeOfScreen: .newGame)
     @StateObject var gameViewModelSaved: GameViewModel = GameViewModel(typeOfScreen: .saved)
-    @State private var isGoingToGameScreen = false
+    @State private var isGoingToGameScreenNew = false
+    @State private var isGoingToGameScreenContinue = false
 
     var body: some View {
         ZStack {
@@ -107,14 +108,29 @@ struct HomeContentView: View {
 
             switch vm.gameState {
             case .notStarted:
-                navigationButtonToGame(lable: "New game", type: .active, viewModel: gameViewModelNewGame, state: .chois)
+                SystemButton(label: "New Game", type: .active, state: .chois) {
+                    isGoingToGameScreenNew = true
+                    vm.gameState = .inProgress
+                    }
+                .navigationDestination(isPresented: $isGoingToGameScreenContinue) {
+                    GameContentView(viewModel: GameViewModel(typeOfScreen: .newGame))
+                }
             case .inProgress:
-                navigationButtonToGame(lable: "Continue", type: .active, viewModel: gameViewModelSaved, state: .chois)
-                navigationButtonToGame(lable: "New game", type: .neutral, viewModel: gameViewModelNewGame, state: .neutral)
+                SystemButton(label: "Continue", type: .active, state: .chois) {
+                    isGoingToGameScreenContinue = true
+                    }
+                .navigationDestination(isPresented: $isGoingToGameScreenContinue) {
+                    GameContentView(viewModel: GameViewModel(typeOfScreen: .saved))
+                }
+                SystemButton(label: "New Game", type: .active, state: .neutral) {
+                    isGoingToGameScreenNew = true
+                    }
+                .navigationDestination(isPresented: $isGoingToGameScreenNew) {
+                    GameContentView(viewModel: GameViewModel(typeOfScreen: .newGame))
+                }
             }
         }
     }
-  
     private func navigationButtonToGame(lable: String, type: SystemButtonStyle, viewModel: GameViewModel, state: AnswerState) -> some View {
       SystemButton(label: lable, type: type, state: state) {
       isGoingToGameScreen = true

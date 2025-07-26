@@ -73,7 +73,9 @@ struct GameContentView: View {
       )
     }
     .onDisappear() {
-      self.viewModel.changeLevel()
+      if isGoingToLevelScreen {
+        self.viewModel.changeLevel()
+      }
       Task {
        try? await Task.sleep(for: .seconds(1))
         hintType = nil
