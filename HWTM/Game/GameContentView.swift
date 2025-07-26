@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct GameContentView: View {
+    @EnvironmentObject var coordinator: NavigationCoordinator
   @ObservedObject var viewModel: GameViewModel
   //@ObservedObject var timerController = TimerController()
   
@@ -106,10 +107,21 @@ struct GameContentView: View {
             showAnswerState = true
             checkAnswerState(answer: answer)
             
-            Task {
-             try? await Task.sleep(for: .seconds(1))
-              isGoingToLevelScreen = true
-            }
+              Task {
+                  try? await Task.sleep(for: .seconds(1))
+                  //              isGoingToLevelScreen = true
+                  DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                      coordinator.goTo(.levelList)
+                      
+                      DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                          if isAnswerRight {
+                              coordinator.pop()
+                          } else {
+                              coordinator.goTo(.gameOver)
+                          }
+                      }
+                  }
+              }
           }
         }
       }

@@ -8,7 +8,6 @@
 import SwiftUI
 
 final class HomeVM: ObservableObject {
-    @EnvironmentObject var coordinator: NavigationCoordinator
     enum GameStates {
         case notStarted
         case inProgress // to remove later
