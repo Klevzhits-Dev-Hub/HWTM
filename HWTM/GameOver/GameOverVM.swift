@@ -34,13 +34,21 @@ final class GameOverVM: ObservableObject {
     @Published var gameState: GameResult = .gameOver
     @Published var level: Int
     @Published var prize: Int
+    let ud = UserDefaultsService()
 
     init(initialState: GameResult, level: Int, prize: Int) {
         self.gameState = initialState
         self.level = level
         self.prize = prize
 
-        UserDefaultsService().saveHasPlayed()
-        UserDefaultsService().saveBestScore(prize)
+        ud.saveHasPlayed()
+        checkUpdatingBestScore()
+    }
+
+    private func checkUpdatingBestScore() {
+        let oldScore = ud.getBestScore()
+        if oldScore < prize {
+            ud.saveBestScore(prize)
+        }
     }
 }
