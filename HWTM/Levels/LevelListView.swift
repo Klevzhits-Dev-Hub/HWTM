@@ -52,7 +52,7 @@ struct LevelListView: View {
                             ForEach(viewModel.levels) { level in
                                 LevelView(
                                     level: level,
-                                    isCurrent: level.number == viewModel.currentLevel
+                                    isCurrent: level.number == viewModel.levelToHighlight
                                 )
                                 .id(level.number)
                             }
@@ -66,6 +66,13 @@ struct LevelListView: View {
                             proxy.scrollTo(viewModel.levels.last?.number, anchor: .bottom)
                         }
                     }
+                }
+                if viewModel.lostBeforeGuaranteed {
+                        Text("Your prize is $0 but happiness is free! :)")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .padding()
+                    Spacer(minLength: 20)
                 }
             }
             

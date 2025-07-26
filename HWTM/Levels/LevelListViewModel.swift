@@ -35,5 +35,22 @@ class LevelListViewModel: ObservableObject {
         self.currentLevel = currentLevel
         self.isAnswerRight = isAnswerRight
     }
-}
+    
+    var guaranteedWinLevel: Level? {
+        guard !isAnswerRight else { return nil }
+        let passedLevels = levels.filter { $0.number <= currentLevel }
+        return passedLevels.first(where: { $0.type == .guaranteed })
+    }
 
+    var lostBeforeGuaranteed: Bool {
+        !isAnswerRight && guaranteedWinLevel == nil
+    }
+
+    var levelToHighlight: Int? {
+        if isAnswerRight {
+            return currentLevel
+        } else {
+            return guaranteedWinLevel?.number
+        }
+    }
+}
