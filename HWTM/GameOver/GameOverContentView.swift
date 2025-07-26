@@ -82,11 +82,11 @@ struct GameOverContentView: View {
     private func buttonsView(geometry: GeometryProxy) -> some View {
         VStack(spacing: 14) {
 
-            SystemButton(label: "\(vm.gameState.continueButtonTitle)", type: .active) {
+            SystemButton(label: "\(vm.gameState.continueButtonTitle)", type: .active, state: .chois) {
               // action: push saved game screen
               isGoingToGameScreen = true
             }
-            SystemButton(label: "Maybe next time", type: .neutral) {
+            SystemButton(label: "Maybe next time", type: .neutral, state: .neutral) {
                 // action: push a new game screen
               isGoingToGameScreen = true
             }

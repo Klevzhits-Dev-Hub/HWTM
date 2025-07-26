@@ -89,17 +89,9 @@ enum SystemButtonStyle {
 
 struct SystemButton: View {
     let label: String
-    let type: SystemButtonStyle
+    let type: SystemButtonStyle /// for managing states
+    let state: AnswerState /// for picking colors
     let action: () -> Void
-
-    private var backgroundColor: Color {
-        switch type {
-        case .neutral:
-            return .clear
-        case .active:
-            return .yellow
-        }
-    }
 
     var body: some View {
 
@@ -109,12 +101,12 @@ struct SystemButton: View {
 
                 ZStack {
                     CustomButtonShape()
-                        .fill(backgroundColor
-//                            LinearGradient(
-//                                gradient: Gradient(colors: gradientColors(for: state)),
-//                                startPoint: .top,
-//                                endPoint: .bottom
-//                            )
+                        .fill(
+                            LinearGradient(
+                                gradient: Gradient(colors: gradientColors(for: state)),
+                                startPoint: .top,
+                                endPoint: .bottom
+                            )
                         )
                         .frame(width: geometry.size.width * 0.9, height: 56)
 

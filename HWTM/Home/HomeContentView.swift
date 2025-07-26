@@ -82,16 +82,16 @@ struct HomeContentView: View {
 
             switch vm.gameState {
             case .notStarted:
-              navigationButtonToGame(lable: "New game", type: .active, viewModel: gameViewModelNewGame)
+                navigationButtonToGame(lable: "New game", type: .active, viewModel: gameViewModelNewGame, state: .chois)
             case .inProgress:
-              navigationButtonToGame(lable: "Continue", type: .active, viewModel: gameViewModelSaved)
-              navigationButtonToGame(lable: "New game", type: .neutral, viewModel: gameViewModelNewGame)
+                navigationButtonToGame(lable: "Continue", type: .active, viewModel: gameViewModelSaved, state: .chois)
+                navigationButtonToGame(lable: "New game", type: .neutral, viewModel: gameViewModelNewGame, state: .neutral)
             }
         }
     }
   
-  private func navigationButtonToGame(lable: String, type: SystemButtonStyle, viewModel: GameViewModel) -> some View {
-    SystemButton(label: lable, type: type) {
+    private func navigationButtonToGame(lable: String, type: SystemButtonStyle, viewModel: GameViewModel, state: AnswerState) -> some View {
+      SystemButton(label: lable, type: type, state: state) {
       isGoingToGameScreen = true
     }
     .navigationDestination(isPresented: $isGoingToGameScreen) {
