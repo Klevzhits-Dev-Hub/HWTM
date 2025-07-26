@@ -11,8 +11,6 @@ class LevelListViewModel: ObservableObject {
   @Published var currentLevel: Int
   @Published var isAnswerRight: Bool
   @Published var levels = [
-      Level(number: 348, amount: "$44", type: .regular),
-      Level(number: 3255, amount: "$04004", type: .regular),
       Level(number: 15, amount: "$1,000,000", type: .final),
       Level(number: 14, amount: "$500,000", type: .regular),
       Level(number: 13, amount: "$250,000", type: .regular),
