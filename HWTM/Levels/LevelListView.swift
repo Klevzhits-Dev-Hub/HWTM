@@ -24,21 +24,23 @@ struct LevelListView: View {
             
             VStack {
                 HStack(alignment: .top) {
-                    Button(action: {
-                        dismiss()
-                    }) {
-                        Image(systemName: "chevron.left")
-                            .font(.title2)
-                            .foregroundColor(.white)
+                    if viewModel.isAnswerRight {
+                        Button(action: {
+                            dismiss()
+                        }) {
+                            Image(systemName: "chevron.left")
+                                .font(.title2)
+                                .foregroundColor(.white)
+                        }
                     }
                     
                     Spacer()
                     
                     Button(action: {
                         let prize = viewModel.prizeInfo()
-                            gameOverViewModel.level = prize.level
-                            gameOverViewModel.prize = prize.amount
-                            isGoingToGameOverScreen = true
+                        gameOverViewModel.level = prize.level
+                        gameOverViewModel.prize = prize.amount
+                        isGoingToGameOverScreen = true
                     }) {
                         Image(systemName: "banknote")
                             .font(.title2)
@@ -71,10 +73,10 @@ struct LevelListView: View {
                     }
                 }
                 if viewModel.lostBeforeGuaranteed {
-                        Text("Your prize is $0 but happiness is free! :)")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .padding()
+                    Text("Your prize is $0 but happiness is free! :)")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .padding()
                     Spacer(minLength: 20)
                 }
             }
