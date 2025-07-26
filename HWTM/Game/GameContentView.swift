@@ -111,11 +111,13 @@ struct GameContentView: View {
                   try? await Task.sleep(for: .seconds(1))
                   //              isGoingToLevelScreen = true
                   DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                      coordinator.goTo(.levelList)
+//                      coordinator.goTo(.levelList)
+                      isGoingToLevelScreen = true
                       
                       DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                           if isAnswerRight {
-                              coordinator.pop()
+//                              coordinator.pop()
+                              isGoingToLevelScreen = false
                           } else {
                               coordinator.goTo(.gameOver)
                           }
