@@ -9,11 +9,23 @@ import SwiftUI
 
 @main
 struct HWTMApp: App {
+    @StateObject var coordinator = NavigationCoordinator()
     var body: some Scene {
-        WindowGroup {
-          NavigationStack {
-            HomeContentView(vm: HomeVM(initialState: .notStarted))
-          }
+        NavigationStack(path: $coordinator.path) {
+            HomeVM(initialState: .notStarted)
+                .environmentObject(coordinator)
+                .navigationDestination(for: AppScreen.self) { screen in
+                    switch screen {
+                    case .home:
+//                        HomeVM(initialState: .notStarted)
+                    case .game:
+//                        GameContentView(viewModel: viewModel)
+                    case .levelList:
+//                        LevelListView()
+                    case .gameOver:
+//                        GameOverView()
+                    }
+                }
         }
     }
 }

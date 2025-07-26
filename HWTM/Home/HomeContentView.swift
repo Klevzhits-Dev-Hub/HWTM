@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct HomeContentView: View {
+    @EnvironmentObject var coordinator: NavigationCoordinator
     @ObservedObject var vm: HomeVM
     @StateObject var gameViewModelNewGame: GameViewModel = GameViewModel(typeOfScreen: .newGame)
     @StateObject var gameViewModelSaved: GameViewModel = GameViewModel(typeOfScreen: .saved)
@@ -91,12 +92,13 @@ struct HomeContentView: View {
     }
   
   private func navigationButtonToGame(lable: String, type: SystemButtonStyle, viewModel: GameViewModel) -> some View {
-    SystemButton(label: lable, type: type) {
-      isGoingToGameScreen = true
-    }
-    .navigationDestination(isPresented: $isGoingToGameScreen) {
-      GameContentView(viewModel: viewModel)
-    }
+      SystemButton(label: lable, type: type) {
+          isGoingToGameScreen = true
+          coordinator.goTo(.game)
+      }
+//    .navigationDestination(isPresented: $isGoingToGameScreen) {
+//      GameContentView(viewModel: viewModel)
+//    }
   }
 }
 
