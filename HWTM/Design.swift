@@ -108,20 +108,20 @@ struct SystemButton: View {
                                 endPoint: .bottom
                             )
                         )
-                        .frame(width: geometry.size.width * 0.9, height: 56)
+                        .frame(width: geometry.size.width * 0.9, height: 62)
 
                     CustomButtonShape()
                         .stroke(Color.white, lineWidth: 2)
-                        .frame(width: geometry.size.width * 0.9, height: 56)
+                        .frame(width: geometry.size.width * 0.9, height: 62)
 
                     Text(label)
                         .foregroundColor(.white)
                         .font(.headline)
                 }
             }
-            .frame(width: geometry.size.width, height: 56, alignment: .center)
+            .frame(width: geometry.size.width, height: 62, alignment: .center)
         }
-        .frame(height: 56)
+        .frame(height: 62)
     }
 }
 
