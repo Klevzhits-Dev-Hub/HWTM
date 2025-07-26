@@ -5,11 +5,16 @@ final class UserDefaultsService {
 
     // Ключи
     private enum Keys {
+        static let hasPlayed = "hasPlayed"
         static let bestScore = "bestScore"
         static let gameState = "gameState"
     }
 
     // MARK: - Save
+    func saveHasPlayed() {
+        ud.set(true, forKey: Keys.hasPlayed)
+    }
+
     func saveBestScore(_ score: Int) {
         ud.set(score, forKey: Keys.bestScore)
     }
@@ -19,6 +24,10 @@ final class UserDefaultsService {
     }
 
     // MARK: - Get
+    func getHasPlayed() -> Bool {
+        ud.bool(forKey: Keys.hasPlayed)
+    }
+
     func getBestScore() -> Int {
         ud.integer(forKey: Keys.bestScore)
     }
@@ -29,6 +38,7 @@ final class UserDefaultsService {
 
     // MARK: - Delete
     func resetAll() {
+        ud.removeObject(forKey: Keys.hasPlayed)
         ud.removeObject(forKey: Keys.bestScore)
         ud.removeObject(forKey: Keys.gameState)
     }

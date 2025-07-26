@@ -14,17 +14,22 @@ struct HomeContentView: View {
     @State private var isGoingToGameScreen = false
 
     var body: some View {
-            GeometryReader { geometry in
-                ZStack {
-                    GradientBackground()
+        ZStack {
+            GradientBackground()
 
-                    VStack(alignment: .center, spacing: .zero) {
+            GeometryReader { geometry in
+                VStack {
+                    Spacer()
+                    VStack(alignment: .center, spacing: 24) {
                         logoView(geometry: geometry)
                         labelsView(geometry: geometry)
-                        buttonsView(geometry: geometry)
                     }
-                    .frame(width: geometry.size.width, height: geometry.size.height)
+
+                    Spacer()
+                    buttonsView(geometry: geometry)
+                        .padding(.bottom, 12)
                 }
+                .frame(width: geometry.size.width, height: geometry.size.height)
             }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -41,6 +46,7 @@ struct HomeContentView: View {
                     .fullScreenCover(isPresented: $vm.showModal) { SupportContentView()
                     }
                 }
+            }
         }
     }
 
@@ -59,7 +65,7 @@ struct HomeContentView: View {
     }
 
     private func labelsView(geometry: GeometryProxy) -> some View {
-        VStack(spacing: 8) {
+        VStack(spacing: 12) {
             switch vm.gameState {
             case .notStarted, .inProgress:
                 Text("Who Wants\nto be a Millioner")
@@ -69,12 +75,31 @@ struct HomeContentView: View {
                     .foregroundColor(.white)
 
                 if vm.hasPlayed == true {
-                    Text("All-time Best Score")
-                        .foregroundColor(.gray)
+                    VStack(alignment: .center, spacing: .zero) {
+                        Text("All-time Best Score")
+                            .foregroundColor(.gray)
+                            .multilineTextAlignment(.center)
+
+                        bestScoreView()
+                    }
                 }
             }
         }
         .frame(height: geometry.size.height * 0.2)
+    }
+
+    private func bestScoreView() -> some View {
+        HStack(alignment: .center, spacing: .zero) {
+            Text("$\(vm.getBestScore())")
+                .font(.title)
+                .fontWeight(.bold)
+                .foregroundColor(.white)
+
+            Image("coin")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 45, height: 45)
+        }
     }
 
     private func buttonsView(geometry: GeometryProxy) -> some View {
