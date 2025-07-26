@@ -102,17 +102,34 @@ struct SystemButton: View {
     }
 
     var body: some View {
-        Button(action: action) {
-            Text(label)
-                .fontWeight(.bold)
-                .frame(height: 56)
-                .frame(maxWidth: .infinity)
-                .background(backgroundColor)
-                .foregroundColor(.white)
-                .clipShape(Capsule())
-                .padding(.horizontal, 40)
-                .shadow(radius: 5)
+
+        GeometryReader { geometry in
+
+            Button(action: action) {
+
+                ZStack {
+                    CustomButtonShape()
+                        .fill(backgroundColor
+//                            LinearGradient(
+//                                gradient: Gradient(colors: gradientColors(for: state)),
+//                                startPoint: .top,
+//                                endPoint: .bottom
+//                            )
+                        )
+                        .frame(width: geometry.size.width * 0.9, height: 56)
+
+                    CustomButtonShape()
+                        .stroke(Color.white, lineWidth: 2)
+                        .frame(width: geometry.size.width * 0.9, height: 56)
+
+                    Text(label)
+                        .foregroundColor(.white)
+                        .font(.headline)
+                }
+            }
+            .frame(width: geometry.size.width, height: 56, alignment: .center)
         }
+        .frame(height: 56)
     }
 }
 
