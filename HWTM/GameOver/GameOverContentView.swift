@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct GameOverContentView: View {
+    @EnvironmentObject var coordinator: NavigationCoordinator
     @ObservedObject var vm: GameOverVM
     @State private var isGoingToGameScreen = false
     @StateObject var gameViewModel: GameViewModel = GameViewModel(typeOfScreen: .newGame)
@@ -84,11 +85,12 @@ struct GameOverContentView: View {
 
             SystemButton(label: "\(vm.gameState.continueButtonTitle)", type: .active, state: .chois) {
               // action: push saved game screen
-              isGoingToGameScreen = true
+//              isGoingToGameScreen = true
+                coordinator.pop()
             }
             SystemButton(label: "Maybe next time", type: .neutral, state: .neutral) {
                 // action: push a new game screen
-              isGoingToGameScreen = true
+                coordinator.resetToRoot()
             }
         }
     }

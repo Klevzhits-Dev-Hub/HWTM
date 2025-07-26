@@ -21,6 +21,13 @@ final class NavigationCoordinator: ObservableObject {
         path.append(screen)
     }
     
+    func pop() {
+        guard !path.isEmpty else {
+            return
+        }
+        path.removeLast()
+    }
+    
     func resetToRoot() {
         path = []
     }
