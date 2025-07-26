@@ -14,10 +14,11 @@ final class HomeVM: ObservableObject {
     }
 
     @Published var gameState: GameStates = .notStarted
-    @Published var hasPlayed: Bool = false /// to show label with the best score
+    @Published var hasPlayed: Bool = true /// to show label with the best score
     @Published var showModal: Bool = false
     @Published var isGameStarted: Bool = false /// to show button "continue"
 
+    var bestScore = UserDefaultsService().getBestScore()
     var count = 0
 
     /*
