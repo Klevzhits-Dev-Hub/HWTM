@@ -70,6 +70,12 @@ struct LevelListView: View {
                         withAnimation(.easeInOut(duration: 0.6)) {
                             proxy.scrollTo(viewModel.levels.last?.number, anchor: .bottom)
                         }
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                            let prize = viewModel.prizeInfo()
+                            gameOverViewModel.level = prize.level
+                            gameOverViewModel.prize = prize.amount
+                            isGoingToGameOverScreen = true
+                        }
                     }
                 }
                 if viewModel.lostBeforeGuaranteed {

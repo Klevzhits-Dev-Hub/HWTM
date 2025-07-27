@@ -77,6 +77,7 @@ struct GameOverContentView: View {
                     .clipShape(Circle())
             }
         }
+        .navigationBarBackButtonHidden(true)
         .frame(height: geometry.size.height * 0.2)
     }
 
@@ -86,7 +87,8 @@ struct GameOverContentView: View {
             SystemButton(label: "\(vm.gameState.continueButtonTitle)", type: .active, state: .chois) {
               // action: push saved game screen
 //              isGoingToGameScreen = true
-                coordinator.pop()
+                coordinator.resetToRoot()
+                coordinator.goTo(.game)
             }
             SystemButton(label: "Maybe next time", type: .neutral, state: .neutral) {
                 // action: push a new game screen
