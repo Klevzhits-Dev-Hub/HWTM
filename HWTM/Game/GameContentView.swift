@@ -192,6 +192,7 @@ struct GameContentView: View {
                         if let index = viewModel.currentQuestion?.allAnswersShuffled.firstIndex(of: answer) {
                             viewModel.currentQuestion?.allAnswersShuffled[index] = ""
                         }
+                        selectedAnswer = nil
                         isSecondChanceUsed = true
                         return
                     }

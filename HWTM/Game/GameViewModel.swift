@@ -69,7 +69,7 @@ final class GameViewModel: ObservableObject {
                     print("Ошибка при загрузке hard: \(error)")
                 }
             }
-
+            print(currentQuestion?.correct_answer ?? "")
         } catch {
             errorMessage = error.localizedDescription
         }
@@ -78,6 +78,7 @@ final class GameViewModel: ObservableObject {
   
   func changeLevel() {
     currentLevel += 1
+      print(currentQuestion?.correct_answer ?? "")
   }
   
   func resetLevel() {
