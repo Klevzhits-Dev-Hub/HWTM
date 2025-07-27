@@ -29,9 +29,9 @@ Built from scratch in SwiftUI — no third-party libraries.
 
 ## 📸 Screenshots
 
-<img width="250"  alt="Main" src="https://github.com/user-attachments/assets/d39af7ca-cbef-4537-8b16-078dd0b34f16" />
-<img width="250"  alt="Game" src="https://github.com/user-attachments/assets/641ac004-7b7e-4079-be04-fddb2011de08" />
-<img width="250"  alt="Table" src="https://github.com/user-attachments/assets/3cb5db7f-5d8a-4d8d-919f-6e27e323763d" />
+<img width="250"  alt="Image" src="https://github.com/user-attachments/assets/48f1dd4f-b130-48b0-8812-9d971259f247" />
+<img width="250"  alt="Image" src="https://github.com/user-attachments/assets/928fd078-636f-4660-9522-87e1a34fc863" />
+<img width="250"  alt="Image" src="https://github.com/user-attachments/assets/c81d5a97-1647-42bb-baab-af36b8d4f1bc" />
 
 ---
 
