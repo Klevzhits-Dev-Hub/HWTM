@@ -40,6 +40,7 @@ struct AnswerButton: View {
     let state: AnswerState
     let action: () -> Void
     
+    private let buttonHeight = UIScreen.main.bounds.height * 0.075
     
     var body: some View {
         
@@ -56,11 +57,11 @@ struct AnswerButton: View {
                       endPoint: .bottom
                     )
                   )
-                  .frame(width: geometry.size.width * 0.9, height: 56)
+                  .frame(width: geometry.size.width * 0.9, height: buttonHeight)
                 
                 CustomButtonShape()
                   .stroke(Color.white, lineWidth: 2)
-                  .frame(width: geometry.size.width * 0.9, height: 56)
+                  .frame(width: geometry.size.width * 0.9, height: buttonHeight)
                 
                 if state != .disabled {
                   HStack(spacing: 4) {
@@ -69,15 +70,18 @@ struct AnswerButton: View {
                       .bold()
                     Text(answer)
                       .foregroundColor(.white)
+                      
+                     Spacer()
                   }
+                  .padding(40)
                   .font(.headline)
                 }
               }
             }
             .disabled(state == .disabled)
-            .frame(width: geometry.size.width, height: 56, alignment: .center)
+            .frame(width: geometry.size.width, height: buttonHeight, alignment: .center)
         }
-        .frame(height: 56)
+        .frame(height: buttonHeight)
     }
 }
 
@@ -129,25 +133,35 @@ struct HintButton: View {
     let systemName: String
     var isPressed: Bool
     let action: () -> Void
-    
+
     var body: some View {
-      Button(action: action) {
-        
-        Image(systemName: systemName)
-          .font(.system(size: 20, weight: .medium))
-          .foregroundColor(.white)
-          .frame(width: 70, height: 50)
-          .background(
-            Capsule()
-              .strokeBorder(Color.white, lineWidth: 2)
-              .background(Capsule().fill(isPressed ? Color.gray : Color.blue))
-              .clipShape(Capsule()))
-          .buttonStyle(PlainButtonStyle())
-      }
-      .disabled(isPressed)
-      .opacity(isPressed ? 0.5 : 1)
+        Button(action: action) {
+            ZStack {
+                RoundedRectangle(cornerRadius: 40)
+                    .fill(
+                        LinearGradient(
+                            gradient: Gradient(colors: gradientColors(for: .neutral)),
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 40)
+                            .stroke(Color.white, lineWidth: 2)
+                    )
+
+                Image(systemName: systemName)
+                    .font(.system(size: 20, weight: .medium))
+                    .foregroundColor(.white)
+            }
+            .frame(width: 80, height: 44)
+        }
+        .buttonStyle(.plain)
+        .disabled(isPressed)
+        .opacity(isPressed ? 0.5 : 1)
     }
 }
+
 
 
 #Preview {

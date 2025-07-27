@@ -37,19 +37,44 @@ final class GameViewModel: ObservableObject {
     let randomValue = Double.random(in: 0...1)
     return randomValue <= 0.7 ? questions?[currentLevel].correct_answer ?? "" : questions?[currentLevel].incorrect_answers[1] ?? ""
   }
-  
-  func hintCall() -> String {
-    let randomValue = Double.random(in: 0...1)
-    return randomValue <= 0.8 ? questions?[currentLevel].correct_answer ?? "" : questions?[currentLevel].incorrect_answers[1] ?? ""
-  }
 
-  func loadQuestions() async {
-    do {
-      questions = try await questionModel.loadQuestions(.easy)
-    } catch {
-      errorMessage = error.localizedDescription
+    func loadQuestions() async {
+        do {
+            let easy = try await questionModel.loadQuestions(.easy)
+            self.questions = easy
+            print("Easy загружены: \(easy.count)")
+
+            Task {
+                try? await Task.sleep(nanoseconds: 5_000_000_000) // 5 секунд
+                do {
+                    let medium = try await questionModel.loadQuestions(.medium)
+                    print("Medium загружены: \(medium.count)")
+                    await MainActor.run {
+                        self.questions?.append(contentsOf: medium)
+                    }
+                } catch {
+                    print("Ошибка при загрузке medium: \(error)")
+                }
+            }
+
+            Task {
+                try? await Task.sleep(nanoseconds: 10_000_000_000) // 10 секунд
+                do {
+                    let hard = try await questionModel.loadQuestions(.hard)
+                    print("Hard загружены: \(hard.count)")
+                    await MainActor.run {
+                        self.questions?.append(contentsOf: hard)
+                    }
+                } catch {
+                    print("Ошибка при загрузке hard: \(error)")
+                }
+            }
+
+        } catch {
+            errorMessage = error.localizedDescription
+        }
     }
-  }
+
   
   func changeLevel() {
     currentLevel += 1

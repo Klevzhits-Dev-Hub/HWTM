@@ -12,7 +12,5 @@ struct TimerView: View {
     
     var body: some View {
         Image(timerController.currntImageName)
-            .resizable()
-            .aspectRatio(contentMode: .fit)
     }
 }

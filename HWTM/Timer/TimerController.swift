@@ -17,6 +17,8 @@ final class TimerController: ObservableObject {
     
     private var audioPlayer: AVAudioPlayer?
     
+    var onTimeout: (() -> Void)?
+    
     func start() {
         reset()
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
@@ -47,6 +49,7 @@ final class TimerController: ObservableObject {
     private func tick() {
         guard secondsRemaining > 0 else {
             timer?.invalidate()
+            onTimeout?()
             return
         }
         secondsRemaining -= 1

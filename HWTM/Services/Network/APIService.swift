@@ -28,7 +28,7 @@ final class APIService {
         case .hard:
             strLevel = "hard"
         }
-        guard let url = URL(string: "https://opentdb.com/api.php?amount=15&difficulty=\(strLevel)&type=multiple") else {
+        guard let url = URL(string: "https://opentdb.com/api.php?amount=5&difficulty=\(strLevel)&type=multiple") else {
             throw URLError(.badURL)
         }
         

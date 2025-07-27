@@ -14,7 +14,7 @@ struct Game {
 
     // timeLeft - before exit
 
-    var isCallAvailable: Bool = true
+    var isSecondChanseAvailable: Bool = true
     var isAskAudienceAvailable: Bool = true
     var isFiftyFiftyAvailable: Bool = true
     // var isMistakeRightAvailable: Bool

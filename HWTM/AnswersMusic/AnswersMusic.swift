@@ -9,6 +9,8 @@ import AVFoundation
 
 final class AnswersMusic {
     
+    static let shared = AnswersMusic()
+    
     private var intrigaPlayer: AVAudioPlayer?
     private var answerPlayer: AVAudioPlayer?
     

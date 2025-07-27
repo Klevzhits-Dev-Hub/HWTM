@@ -6,7 +6,7 @@
 //
 
 enum HintTypes {
-    case call
+    case secondChance
     case askAudience
     case fiftyFifty
 }
@@ -14,7 +14,7 @@ enum HintTypes {
 final class GameEngine {
 
     func startGame() -> Game {
-        Game(currentLevel: 1, earnedPrize: 0, isCallAvailable: true, isAskAudienceAvailable: true, isFiftyFiftyAvailable: true, isOver: false)
+        Game(currentLevel: 1, earnedPrize: 0, isSecondChanseAvailable: true, isAskAudienceAvailable: true, isFiftyFiftyAvailable: true, isOver: false)
     }
 
     func answerQuestion(game: inout Game, question: Question, answer: String) -> Game {
@@ -29,8 +29,8 @@ final class GameEngine {
 
     func useHint(game: inout Game, hint: HintTypes) -> Game {
         switch hint {
-        case .call:
-            game.isCallAvailable = false
+        case .secondChance:
+            game.isSecondChanseAvailable = false
         case .askAudience:
             game.isAskAudienceAvailable = false
         case .fiftyFifty:
