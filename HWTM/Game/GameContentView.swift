@@ -12,6 +12,7 @@ struct GameContentView: View {
   @ObservedObject var viewModel: GameViewModel
   //@ObservedObject var timerController = TimerController()
   
+    @State private var isGoingToGameOverScreen = false
   @State private var isAnswerRight = false
   @State private var isGoingToLevelScreen = false
   @State private var questionLoad = false
@@ -72,6 +73,13 @@ struct GameContentView: View {
         isAnswerRight: isAnswerRight)
       )
     }
+    .navigationDestination(isPresented: $isGoingToGameOverScreen){
+        GameOverContentView(vm: GameOverVM(
+            initialState: .gameWon,
+            level: 6,
+            prize: 6000)
+        )
+    }
     .onDisappear() {
       if isGoingToLevelScreen {
         self.viewModel.changeLevel()
@@ -101,30 +109,25 @@ struct GameContentView: View {
         ForEach(Array(question.allAnswersShuffled.enumerated()), id: \.element) { index, answer in
           let answer = hintParsing(answer: answer)
           let label = self.lettersArray[index]
-          AnswerButton(label: label, answer: answer, state: getAnswerState(answer: answer, disable: answer.isEmpty)) {
-            
-            selectedAnswer = answer
-            showAnswerState = true
-            checkAnswerState(answer: answer)
-            
-              Task {
-                  try? await Task.sleep(for: .seconds(1))
-                  //              isGoingToLevelScreen = true
-                  DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-//                      coordinator.goTo(.levelList)
-                      isGoingToLevelScreen = true
-                      
-                      DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                          if isAnswerRight {
-//                              coordinator.pop()
-                              isGoingToLevelScreen = false
-                          } else {
-                              coordinator.goTo(.gameOver)
-                          }
-                      }
-                  }
-              }
-          }
+            AnswerButton(label: label, answer: answer, state: getAnswerState(answer: answer, disable: answer.isEmpty)) {
+                
+                selectedAnswer = answer
+                showAnswerState = true
+                checkAnswerState(answer: answer)
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    isGoingToLevelScreen = true
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        if isAnswerRight {
+                            isGoingToLevelScreen = false
+                        } else {
+//                            isGoingToGameOverScreen = true
+                        }
+                    }
+                }
+                
+            }
         }
       }
       
