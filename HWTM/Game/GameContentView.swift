@@ -58,8 +58,6 @@ struct GameContentView: View {
       content()
     }
     .onAppear() {
-        isSecondChanceUsed = false
-        hasUsedSecondChanceThisTurn = false
         hintType = nil
         AnswersMusic.shared.stopMusic()
         selectedAnswer = nil
@@ -149,6 +147,7 @@ struct GameContentView: View {
                     .font(.title2)
                     .foregroundColor(.white)
             }
+            .disabled(selectedAnswer != nil)
         }
         .padding(.horizontal, 32)
         .frame(maxWidth: .infinity)
@@ -209,6 +208,7 @@ struct GameContentView: View {
                     }
                 }
             }
+            .disabled(selectedAnswer != nil)
         }
       }
       
@@ -217,6 +217,7 @@ struct GameContentView: View {
           hintType = .fiftyFifty
           isPressedFiftyFifty = true
         }
+        .disabled(selectedAnswer != nil)
         HintButton(systemName: "person.2", isPressed: isPressedAskAudiens) {
             if let correctAnswer = viewModel.currentQuestion?.correct_answer,
                let index = viewModel.currentQuestion?.allAnswersShuffled.firstIndex(of: correctAnswer) {
@@ -226,8 +227,10 @@ struct GameContentView: View {
                 timerController.pause()
             }
         }
+        .disabled(selectedAnswer != nil)
         HintButton(systemName: "heart", isPressed: isSecondChanceUsed) {
         }
+        .disabled(selectedAnswer != nil)
       }
       .padding()
     }

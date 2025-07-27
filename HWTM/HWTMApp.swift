@@ -10,11 +10,24 @@ import SwiftUI
 @main
 struct HWTMApp: App {
     @StateObject private var coordinator = NavigationCoordinator()
+    @State private var showSplash = true
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environmentObject(coordinator)
+            if showSplash {
+                SplashView()
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            withAnimation {
+                                showSplash = false
+                            }
+                        }
+                    }
+            } else {
+                ContentView()
+                    .environmentObject(coordinator)
+            }
         }
     }
+
 }

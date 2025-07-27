@@ -14,6 +14,14 @@ final class AnswersMusic {
     private var intrigaPlayer: AVAudioPlayer?
     private var answerPlayer: AVAudioPlayer?
     
+    func playHelp() {
+        playAnswer(named: "help")
+    }
+    
+    func playOST() {
+        playAnswer(named: "ost")
+    }
+    
     func correctAnswerPlay() {
         playIntriga {
             self.playAnswer(named: "correct")

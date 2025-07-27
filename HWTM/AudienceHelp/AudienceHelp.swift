@@ -45,8 +45,12 @@ struct AudienceHelp: View {
             .padding()
             
             .onAppear {
+                AnswersMusic.shared.playHelp()
                 votes = generateVotes(rightAnswerIndex: rightAnswer, difficulty: difficulty)
                 animateVotes()
+            }
+            .onDisappear {
+                AnswersMusic.shared.stopMusic()
             }
         }
     }
