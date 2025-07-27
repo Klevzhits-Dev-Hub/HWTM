@@ -23,31 +23,6 @@ struct LevelListView: View {
             GradientBackground()
             
             VStack {
-                HStack(alignment: .top) {
-                    if viewModel.isAnswerRight {
-                        Button(action: {
-                            dismiss()
-                        }) {
-                            Image(systemName: "chevron.left")
-                                .font(.title2)
-                                .foregroundColor(.white)
-                        }
-                    }
-                    
-                    Spacer()
-                    
-                    Button(action: {
-                        let prize = viewModel.prizeInfo()
-                        gameOverViewModel.level = prize.level
-                        gameOverViewModel.prize = prize.amount
-                        isGoingToGameOverScreen = true
-                    }) {
-                        Image(systemName: "banknote")
-                            .font(.title2)
-                            .foregroundColor(.white)
-                    }
-                }
-                .padding()
                 
                 Spacer()
                 

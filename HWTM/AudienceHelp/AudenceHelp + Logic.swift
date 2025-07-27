@@ -9,19 +9,26 @@ import  SwiftUI
 
 extension AudienceHelp {
     func generateVotes(rightAnswerIndex: Int, difficulty: QuestionLevel) -> [Int] {
-        var votes = [10, 10, 10, 10] // Минимальное значение голоса.
-        let range = difficulty == .hard ? 15...40 : 25...55
-        let correctVotes = Int.random(in: range)
+        var votes = [10, 10, 10, 10] // Базовые значения
+        let shouldBeCorrect = Bool.random(probability: difficulty == .hard ? 0.5 : 0.7)
         
-        votes[rightAnswerIndex] += correctVotes
-        
+        var boostedIndex = rightAnswerIndex
+        if !shouldBeCorrect {
+            // выбираем случайный неправильный индекс
+            let wrongIndices = (0..<4).filter { $0 != rightAnswerIndex }
+            boostedIndex = wrongIndices.randomElement()!
+        }
+
+        let boostedVotes = Int.random(in: 40...60) // Усиливаем до 40–60%
+        votes[boostedIndex] += boostedVotes
+
         let remaining = 100 - votes.reduce(0, +)
         if remaining > 0 {
             for _ in 0..<remaining {
                 votes[Int.random(in: 0..<4)] += 1
             }
         }
-        
+
         return votes
     }
     
@@ -42,3 +49,8 @@ extension AudienceHelp {
     }
 }
 
+extension Bool {
+    static func random(probability: Double) -> Bool {
+        return Double.random(in: 0...1) < probability
+    }
+}
